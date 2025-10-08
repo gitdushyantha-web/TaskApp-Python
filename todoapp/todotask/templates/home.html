@@ -1,0 +1,43 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+</head>
+
+<body>
+<h2>Task Page</h2>
+
+<div class="row">
+    <div class="column" style="background-color: #ffffff;">
+        <h2>Add a Task</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" placeholder="Title" required name="task_name"/>
+            <textarea placeholder="Description" required name="task_description"></textarea>
+            <div class="button-container">
+                <button type="submit">Add</button>
+            </div>
+        </form>
+
+    </div>
+    <div class="column" style="background-color: #ffffff;">
+            {% block content %}
+                {% if all_tasks %}
+                    <div class="task-box">
+                        {% for task in all_tasks %}
+                        <div class="task-name">{{ task.task_name }}</div>
+                        <div class="task-description">{{ task.task_description }} &nbsp;&nbsp; <span class="text-button" role="button" tabindex="0">Done</span> </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endblock %}
+    </div>
+</div>
+
+</body>
+</html>
